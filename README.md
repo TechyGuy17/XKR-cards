@@ -6,6 +6,13 @@ The plan is rather simple. If we create wallets with a set number, lets say 100 
 
 The POS machines idea is also rather simple, as a start we have a ESP8266 with a NFC reader, when the ESP reads a card it saves the data as a json. The reason for the ESP is the addition of Wi-Fi that makes it possible to host a webserver with the json on. A host computer can then download the json and use the data to access the wallets and count the XKR. All change would go to the card owner
 
+```mermaid
+flowchart LR
+id1(Card: Wallets, change address) --> id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine);
+id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine) --> --> id3(POS machine: Uses the wallets to get out the money form wallets, sends change to change address);
+    
+```
+
 # Why?
 This project is mainly a hobby project for me to test the possibility of payment cards without a bank. Only decentralized machines that anyone can host. But it has the potential of evolving over time and become a viable system of paying
 
