@@ -9,7 +9,7 @@ The POS machines idea is also rather simple, as a start we have a ESP8266 with a
 ```mermaid
 flowchart LR
 id1(Card: Wallets, change address) --> id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine);
-id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine) --> --> id3(POS machine: Uses the wallets to get out the money form wallets, sends change to change address);
+id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine) --> id3(POS machine: Uses the wallets to get out the money form wallets, sends change to change address);
     
 ```
 
