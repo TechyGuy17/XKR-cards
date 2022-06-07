@@ -2,19 +2,13 @@
 This project is my take on how to create cards for paying with Kryptokrona (https://kryptokrona.org)
 
 # The base idea
-The plan is rather simple. If we create wallets with a set number, lets say 100 XKR. And then make 5 of those. We have 500 XKR worth of wallets, if we then would take the private and public key of those and program to a keycard we can let devices take those keys and use them to get out the money from the wallets, on the keycard  wil also be a pre-programmed address for the POS machine to send the change to. This system would make the XKR safe because even if the cards got hacked, they can only access the XKR on the card. Wich are small amounts and wouldnt matter in the same way. To refill a card you just have to reprogram the cards with new wallets.
-
-The POS machines idea is also rather simple, as a start we have a ESP8266 with a NFC reader, when the ESP reads a card it saves the data as a json. The reason for the ESP is the addition of Wi-Fi that makes it possible to host a webserver with the json on. A host computer can then download the json and use the data to access the wallets and count the XKR. All change would go to the card owner
-
-```mermaid
-flowchart LR
-id1(Card: Wallets, change address) --> id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine);
-id2(Scanner: ESP8266 takes in raw data, returns JSON to POS machine) --> id3(POS machine: Uses the wallets to get out the money form wallets, sends change to change address);
-    
-```
+The plan is rather simple. On a server we create a wallet. Then when people register we create subwallets, the subwallets will have some way of verifying. Lets call it a key. The key will be a hex number encrypted with a PIN of your choice. The hex can then be written to something like a keycard together with a URL to the wallet. Then have a little machine, a ESP8266 and a keycard reader + a numpad. If we then use the machine to read the hex, get the PIN and find the URL. Then we send the hex, PIN and a kryptokrona address to the owner of the ESP to the URL, if the wallet on the other side can find a subwallet that matches the hex and PIN, then it sends XKR from that subwallet to the XKR address. 
 
 # Why?
-This project is mainly a hobby project for me to test the possibility of payment cards without a bank. Only decentralized machines that anyone can host. But it has the potential of evolving over time and become a viable system of paying
+This project is mainly a hobby project for me to test the possibility of payment cards for XKR on the cheap. But it has the potential of evolving over time and become a viable system of paying
+
+# But this isnt decentralised!
+It is, but not onchain. Since the URL isnt hardcoded anyone can host their own bank and write it to their own card. But i will ofcourse supply an "official" bank for the ones that dont want to
 
 
 # Donate to the project
