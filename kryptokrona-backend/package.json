@@ -1,0 +1,23 @@
+{
+  "name": "kryptokrona-xkr-card-backend",
+  "version": "0.0.1",
+  "description": "A kryptokrona backend for payment cards",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechyGuy17/XKR-cards.git"
+  },
+  "author": "techy@novastack.org",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TechyGuy17/XKR-cards/issues"
+  },
+  "homepage": "https://github.com/TechyGuy17/XKR-cards.gitreadme",
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "turtlecoin-walletd-rpc-js": "^0.7.2"
+  }
+}
