@@ -9,7 +9,7 @@ let settings = { method: "Get" };
 const config = require('./config');
 
 var walletd = new TurtleCoinWalletd(
-    'http://localhost',
+    'http://192.168.0.235',
     8070,
     config.rpcPassword,
     true
@@ -49,9 +49,9 @@ var walletd = new TurtleCoinWalletd(
 	let json = JSON.stringify(db);
 	fs.writeFile('db.json',json, function(err, result) {
 		if (err) console.log('error', err);
-});
+        });
 
-}
+        }
 
 let getUserWallet = user => {
 	for ( i in db.wallets ) {
@@ -77,11 +77,22 @@ let getUserBank = user => {
 
 
 }
+let readHex;
+async function getKey() {
+        await fetch('http://localhost:8080')
+        .then((response) => {
+                return response.json()
+        }).then((json) => {
+        console.log(json)
+
+})
+}
+ 
 const crypto = require('crypto');
+const { getEnvironmentData } = require('worker_threads');
 const shasum = crypto.createHash('sha1');
 
-var readHex = "M5$p]Fg]x_9axJ$/==c9iU[RUdD/_RRUpxkZt2}%+SeMD=(vxnk%{MZ2%[gUzLhX";
-shasum.update(readHex);
+//shasum.update(readHex);
 var key  = shasum.digest('hex');
 
 
@@ -123,13 +134,40 @@ if (!user_bank) {
               console.log(err)
             })
     }
+    async function send() {
 
-//     walletd
-//   .getStatus()
-//   .then(resp => {
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
+        sender_wallet = false;
+        sender_wallet = await getUserBank(readHex);
+        receiver_address = readAddress;
+        amount = readAmount;
+
+    
+        if ( receiver_address.length != 99 || !receiver_address.startsWith('SEKR') ) {
+         console.log('invalid address')
+          return;
+        }
+    
+        walletd
+                .sendTransaction(3,[{"address":receiver_address,"amount":parseInt(amount)*100000}],1000,[sender_wallet])
+                .then(resp => {
+    
+                  sender_wallet = resp.body.result.address;
+    
+    
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+    
+    
+      }
+
+    walletd
+  .getStatus()
+  .then(resp => {
+  })
+  .catch(err => {
+    console.log(err)
+  })
 
 
