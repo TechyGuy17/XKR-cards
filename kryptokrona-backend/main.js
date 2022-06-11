@@ -1,15 +1,19 @@
 var TurtleCoinWalletd = require('turtlecoin-walletd-rpc-js').default
 
 const http = require('http');
-
+const fetch = require('node-fetch')
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
 
 let settings = { method: "Get" };
 
 const config = require('./config');
 
+const crypto = require('crypto')
+const { getEnvironmentData } = require('worker_threads')
+
+
 var walletd = new TurtleCoinWalletd(
-    'http://192.168.0.235',
+    'http://localhost',
     8070,
     config.rpcPassword,
     true
@@ -77,25 +81,22 @@ let getUserBank = user => {
 
 
 }
-let readHex;
-async function getKey() {
-        await fetch('http://localhost:8080')
+async function getID() {
+    fetch('http://localhost:8080')
         .then((response) => {
-                return response.json()
+            return response.json()
         }).then((json) => {
-        console.log(json)
-
-})
+            return json.ID
+        })
 }
- 
-const crypto = require('crypto');
-const { getEnvironmentData } = require('worker_threads');
-const shasum = crypto.createHash('sha1');
-
-//shasum.update(readHex);
-var key  = shasum.digest('hex');
-
-
+let key;
+getID()
+    .then(id => {
+        const shasum = crypto.createHash('sha1')
+        console.log(id)
+        shasum.update(id)
+        key = shasum.digest('hex')
+    })
 
 user_bank = false;
 user_bank = getUserBank(key)
