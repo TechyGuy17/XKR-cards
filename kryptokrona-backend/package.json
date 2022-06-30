@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TechyGuy17/XKR-cards.gitreadme",
   "dependencies": {
+    "discord.js": "^13.8.1",
     "node-fetch": "^2.6.1",
     "turtlecoin-walletd-rpc-js": "^0.7.2"
   }
